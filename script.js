@@ -1,44 +1,71 @@
 const world = document.getElementById("world");
+const character = document.getElementById("character");
 
 const keys = {};
 
 let zoom = 1;
 let panX = 50;
 
-const zoomSpeed = 0.005;
-const panSpeed = 0.15;
+/* Character's position in the world */
+let characterX = 50;
 
+/* Speeds */
+const zoomSpeed = 0.005;
+
+/* 3x faster panning */
+const panSpeed = 0.6;
+
+
+/* Keyboard down */
 window.addEventListener("keydown", function(event) {
     keys[event.key.toLowerCase()] = true;
 });
 
+
+/* Keyboard up */
 window.addEventListener("keyup", function(event) {
     keys[event.key.toLowerCase()] = false;
 });
 
+
 function gameLoop() {
 
-    // Move forward / zoom in
+    /* =========================
+       FORWARD / BACKWARD
+    ========================= */
+
     if (keys["w"] || keys["arrowup"]) {
         zoom += zoomSpeed;
     }
 
-    // Move backward / zoom out
     if (keys["s"] || keys["arrowdown"]) {
         zoom -= zoomSpeed;
     }
 
-    // Look left
+
+    /* =========================
+       LOOK LEFT / RIGHT
+    ========================= */
+
     if (keys["a"] || keys["arrowleft"]) {
         panX -= panSpeed;
+
+        /* Character moves opposite camera */
+        characterX += panSpeed * 0.5;
     }
 
-    // Look right
     if (keys["d"] || keys["arrowright"]) {
         panX += panSpeed;
+
+        /* Character moves opposite camera */
+        characterX -= panSpeed * 0.5;
     }
 
-    // Limit zoom
+
+    /* =========================
+       LIMIT ZOOM
+    ========================= */
+
     if (zoom < 1) {
         zoom = 1;
     }
@@ -47,7 +74,11 @@ function gameLoop() {
         zoom = 3;
     }
 
-    // Limit panning
+
+    /* =========================
+       LIMIT CAMERA PAN
+    ========================= */
+
     if (panX < 0) {
         panX = 0;
     }
@@ -56,13 +87,39 @@ function gameLoop() {
         panX = 100;
     }
 
-    // Apply zoom and horizontal camera panning
+
+    /* =========================
+       LIMIT CHARACTER
+    ========================= */
+
+    if (characterX < -20) {
+        characterX = -20;
+    }
+
+    if (characterX > 120) {
+        characterX = 120;
+    }
+
+
+    /* =========================
+       APPLY CAMERA
+    ========================= */
+
     world.style.transform = `scale(${zoom})`;
 
     world.style.backgroundPosition =
         `${panX}% center`;
 
+
+    /* =========================
+       APPLY CHARACTER POSITION
+    ========================= */
+
+    character.style.left = `${characterX}%`;
+
+
     requestAnimationFrame(gameLoop);
 }
+
 
 gameLoop();
