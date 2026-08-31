@@ -1,27 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+const world = document.getElementById("world");
 
-    <title>Landscape Explorer</title>
+const keys = {};
 
-    <link rel="stylesheet" href="style.css">
-</head>
+let zoom = 1;
+let panX = 50;
 
-<body>
+const zoomSpeed = 0.005;
+const panSpeed = 0.15;
 
-    <div id="ui">
-        <h1>Landscape Explorer</h1>
-        <p>W / ↑ = Move Forward</p>
-        <p>S / ↓ = Move Backward</p>
-        <p>A = Look Left</p>
-        <p>D = Look Right</p>
-    </div>
+window.addEventListener("keydown", function(event) {
+    keys[event.key.toLowerCase()] = true;
+});
 
-    <div id="world"></div>
+window.addEventListener("keyup", function(event) {
+    keys[event.key.toLowerCase()] = false;
+});
 
-    <script src="script.js"></script>
+function gameLoop() {
 
-</body>
-</html>
+    // Move forward / zoom in
+    if (keys["w"] || keys["arrowup"]) {
+        zoom += zoomSpeed;
+    }
+
+    // Move backward / zoom out
+    if (keys["s"] || keys["arrowdown"]) {
+        zoom -= zoomSpeed;
+    }
+
+    // Look left
+    if (keys["a"] || keys["arrowleft"]) {
+        panX -= panSpeed;
+    }
+
+    // Look right
+    if (keys["d"] || keys["arrowright"]) {
+        panX += panSpeed;
+    }
+
+    // Limit zoom
+    if (zoom < 1) {
+        zoom = 1;
+    }
+
+    if (zoom > 3) {
+        zoom = 3;
+    }
+
+    // Limit panning
+    if (panX < 0) {
+        panX = 0;
+    }
+
+    if (panX > 100) {
+        panX = 100;
+    }
+
+    // Apply zoom and horizontal camera panning
+    world.style.transform = `scale(${zoom})`;
+
+    world.style.backgroundPosition =
+        `${panX}% center`;
+
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
