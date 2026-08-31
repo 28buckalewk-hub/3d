@@ -9,7 +9,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Landscape */
+/* The landscape/world */
 #world {
     position: fixed;
     top: 0;
@@ -26,9 +26,9 @@ body {
     transform-origin: center center;
 }
 
-/* Character stays locked in the middle */
+/* Character is locked to the center of the WORLD */
 #character {
-    position: fixed;
+    position: absolute;
 
     left: 50%;
     bottom: 5%;
@@ -50,16 +50,12 @@ body {
     left: 20px;
 
     color: white;
-
     background: rgba(0, 0, 0, 0.6);
 
     padding: 15px 20px;
-
     border-radius: 10px;
 
     z-index: 10;
-
-    user-select: none;
 }
 
 #ui h1 {
