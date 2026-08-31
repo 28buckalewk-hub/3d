@@ -9,7 +9,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* The landscape */
+/* Landscape */
 #world {
     position: fixed;
     top: 0;
@@ -26,19 +26,19 @@ body {
     transform-origin: center center;
 }
 
-/* The GIF character */
+/* Character stays locked in the middle */
 #character {
-    position: absolute;
+    position: fixed;
 
-    bottom: 5%;
     left: 50%;
+    bottom: 5%;
 
     width: 250px;
     height: auto;
 
     transform: translateX(-50%);
 
-    z-index: 2;
+    z-index: 5;
 
     pointer-events: none;
 }
@@ -46,7 +46,6 @@ body {
 /* Instructions */
 #ui {
     position: fixed;
-
     top: 20px;
     left: 20px;
 
