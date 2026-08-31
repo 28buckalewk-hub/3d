@@ -1,0 +1,24 @@
+body {
+margin: 0;
+overflow: hidden;
+background: #111;
+font-family: Arial, sans-serif;
+}
+
+#score {
+position: absolute;
+top: 20px;
+left: 20px;
+color: white;
+font-size: 24px;
+z-index: 10;
+}
+
+#instructions {
+position: absolute;
+top: 60px;
+left: 20px;
+color: white;
+font-size: 16px;
+z-index: 10;
+}
