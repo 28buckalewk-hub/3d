@@ -1,16 +1,27 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>3D Cube Collector</title>
+    <title>Landscape Explorer</title>
 
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="score">Score: 0</div>
-<div id="instructions">Use WASD or Arrow Keys to move</div>
+    <div id="ui">
+        <h1>Landscape Explorer</h1>
+        <p>W / ↑ = Move Forward</p>
+        <p>S / ↓ = Move Backward</p>
+        <p>A = Look Left</p>
+        <p>D = Look Right</p>
+    </div>
 
-<script type="module" src="script.js"></script>
+    <div id="world"></div>
 
-</body> </html>
+    <script src="script.js"></script>
+
+</body>
+</html>
