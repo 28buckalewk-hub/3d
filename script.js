@@ -3,10 +3,10 @@ const world = document.getElementById("world");
 const keys = {};
 
 let zoom = 1;
-let rotation = 0;
+let panX = 50;
 
 const zoomSpeed = 0.005;
-const rotationSpeed = 0.5;
+const panSpeed = 0.15;
 
 window.addEventListener("keydown", function(event) {
     keys[event.key.toLowerCase()] = true;
@@ -18,38 +18,49 @@ window.addEventListener("keyup", function(event) {
 
 function gameLoop() {
 
-    // Move forward
+    // Move forward / zoom in
     if (keys["w"] || keys["arrowup"]) {
         zoom += zoomSpeed;
     }
 
-    // Move backward
+    // Move backward / zoom out
     if (keys["s"] || keys["arrowdown"]) {
         zoom -= zoomSpeed;
     }
 
     // Look left
     if (keys["a"] || keys["arrowleft"]) {
-        rotation -= rotationSpeed;
+        panX -= panSpeed;
     }
 
     // Look right
     if (keys["d"] || keys["arrowright"]) {
-        rotation += rotationSpeed;
+        panX += panSpeed;
     }
 
-    // Prevent zooming too far out
+    // Limit zoom
     if (zoom < 1) {
         zoom = 1;
     }
 
-    // Prevent extreme zoom
     if (zoom > 3) {
         zoom = 3;
     }
 
-    world.style.transform =
-        `scale(${zoom}) rotate(${rotation}deg)`;
+    // Limit panning
+    if (panX < 0) {
+        panX = 0;
+    }
+
+    if (panX > 100) {
+        panX = 100;
+    }
+
+    // Apply zoom and horizontal camera panning
+    world.style.transform = `scale(${zoom})`;
+
+    world.style.backgroundPosition =
+        `${panX}% center`;
 
     requestAnimationFrame(gameLoop);
 }
